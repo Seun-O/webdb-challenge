@@ -16,11 +16,17 @@ const db = knex(config);
     SQL SELECT * FROM projects || SELECT * FROM projects WHERE projects.id = ID
 */
 
-const getProject = id => {
+const getProject = async id => {
   if (id) {
-    return db("projects as p")
+    const projects = await db("projects")
+      .first()
+      .where({ id });
+    const actions = await db("projects as p")
       .join("actions as a", "p.id", "a.project")
       .where({ "a.project": id });
+
+    const project = { ...projects, actions: actions };
+    return project;
   }
   return db("projects");
 };
@@ -85,17 +91,17 @@ const updateProject = (id, change) => {
     .update(change);
 };
 
-//Function to test db helper methods without endpoints
-// async function execute() {
-//   try {
-//     const data = await delAction(333);
-//     console.log(data);
-//   } catch (err) {
-//     console.log(err);
-//   }
-// }
+// Function to test db helper methods without endpoints
+async function execute() {
+  try {
+    const data = await getProject(2);
+    console.log(data);
+  } catch (err) {
+    console.log(err);
+  }
+}
 
-// execute();
+execute();
 
 module.exports = {
   getProject,
