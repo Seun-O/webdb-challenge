@@ -62,15 +62,20 @@ const addProject = project => {
 };
 
 //Function to test db helper methods without endpoints
-async function execute() {
-  try {
-    const data = await getAction();
-    console.log(data);
-  } catch (err) {
-    console.log(err);
-  }
-}
+// async function execute() {
+//   try {
+//     const data = await getAction();
+//     console.log(data);
+//   } catch (err) {
+//     console.log(err);
+//   }
+// }
 
-execute();
+// execute();
 
-module.exports = db;
+module.exports = {
+  getProject,
+  getAction,
+  addAction,
+  addProject
+};
