@@ -51,6 +51,18 @@ const addAction = action => {
   return db("actions").insert(action);
 };
 
+const updateAction = (id, change) => {
+  return db("actions")
+    .where({ id })
+    .update(change);
+};
+
+const delAction = id => {
+  return db("actions")
+    .where({ id })
+    .del();
+};
+
 /*
     addProject inserts a new project into the database.
     required fields: name, description, completed
@@ -61,10 +73,22 @@ const addProject = project => {
   return db("projects").insert(project);
 };
 
+const delProject = id => {
+  return db("projects")
+    .where({ id })
+    .del();
+};
+
+const updateProject = (id, change) => {
+  return db("projects")
+    .where({ id })
+    .update(change);
+};
+
 //Function to test db helper methods without endpoints
 // async function execute() {
 //   try {
-//     const data = await getAction();
+//     const data = await delAction(333);
 //     console.log(data);
 //   } catch (err) {
 //     console.log(err);
@@ -77,5 +101,9 @@ module.exports = {
   getProject,
   getAction,
   addAction,
-  addProject
+  addProject,
+  delProject,
+  delAction,
+  updateProject,
+  updateAction
 };
